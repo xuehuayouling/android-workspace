@@ -1,0 +1,28 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="YAppBaseTheme" parent="android:Theme.Holo.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="YAppTheme" parent="YAppBaseTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/YButtonStyle</item>
+        <item name="android:selectableItemBackground">@drawable/y_selector_btn_default</item>
+    </style>
+    
+    <style name="YButtonStyle" parent="android:Widget.Holo.Light.Button">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:paddingLeft">4dip</item>
+        <item name="android:paddingRight">4dip</item>
+    </style>
+
+</resources>

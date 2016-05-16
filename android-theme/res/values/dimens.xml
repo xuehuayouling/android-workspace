@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- button的圆角半径 -->
+    <dimen name="y_bg_btn_corners_radius">5dp</dimen>
+    <!-- edittext的圆角半径 -->
+    <dimen name="y_bg_et_corners_radius">5dp</dimen>
+    <!-- edittext的描边宽度 -->
+    <dimen name="y_bg_et_stroke_width">1dp</dimen>
+    <!-- edittext的上、下padding -->
+    <dimen name="y_bg_et_padding_top_bottom">3dp</dimen>
+    <!-- edittext的左、右padding -->
+    <dimen name="y_bg_et_padding_left_right">4dp</dimen>
+    <dimen name="fbutton_default_conner_radius">8dp</dimen>
+    <dimen name="fbutton_default_padding_left">10dp</dimen>
+    <dimen name="fbutton_default_padding_right">10dp</dimen>
+    <dimen name="fbutton_default_padding_top">5dp</dimen>
+    <dimen name="fbutton_default_padding_bottom">5dp</dimen>
+    <dimen name="fbutton_default_shadow_height">4dp</dimen>
+
+    <dimen name="header_height">60dp</dimen>
+    <dimen name="footer_height">90dp</dimen>
+    <dimen name="footer_padding">10dp</dimen>
+</resources>
