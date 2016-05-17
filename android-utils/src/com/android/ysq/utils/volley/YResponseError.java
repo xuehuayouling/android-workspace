@@ -28,7 +28,7 @@ public class YResponseError extends Exception {
 		NOCONNECTIONERROR(-5, "无法访问网络"),
 		UNKNOWERROR(-4, "未知错误，请联系管理员"),
 		DECODEERROR(-3, "数据解析失败，请联系管理员"),
-		SERVERERROR(-2, "服务器错误"),
+		SERVERERROR(-2, "服务器错误，请联系管理员"),
 		TIMEOUT(-1, "请求超时");
 		
 		private int mCode;
