@@ -123,6 +123,7 @@ final class LoggerPrinter implements Printer {
 
 	@Override
 	public void e(Throwable throwable, String message, Object... args) {
+		FileOperator.getInstance().saveToFile(throwable, message, args);
 		if (throwable != null && message != null) {
 			message += " : " + Log.getStackTraceString(throwable);
 		}

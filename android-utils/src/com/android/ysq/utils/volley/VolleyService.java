@@ -174,20 +174,17 @@ final public class VolleyService {
 				try {
 					ret = YJsonUtil.parseObject(response, clazz == null ? YResponseDTO.class : clazz);
 				} catch (Exception e) {
+					Logger.e(e, "Volley请求结果：" + response);
 					YResponseError error = new YResponseError(YResponseError.Type.DECODEERROR);
 					callBack.onRequestFailed(url + requestKey, error);
 					e.printStackTrace();
+					return;
 				}
-				if (ret == null) {
-					YResponseError error = new YResponseError(YResponseError.Type.DECODEERROR);
+				if (!ret.isSuccess()) {
+					YResponseError error = new YResponseError(ret.getStatus_code(), ret.getMessage());
 					callBack.onRequestFailed(url + requestKey, error);
 				} else {
-					if (!ret.isSuccess()) {
-						YResponseError error = new YResponseError(ret.getStatus_code(), ret.getMessage());
-						callBack.onRequestFailed(url + requestKey, error);
-					} else {
-						callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getData());
-					}
+					callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getData());
 				}
 
 			}
@@ -203,6 +200,7 @@ final public class VolleyService {
 				} else if (error instanceof NoConnectionError) {
 					yResponseError = new YResponseError(YResponseError.Type.NOCONNECTIONERROR);
 				} else {
+					Logger.e(error, "Volley请求失败：" + YResponseError.Type.UNKNOWERROR.name());
 					error.printStackTrace();
 				}
 				if (callBack != null) {

@@ -31,4 +31,11 @@ public class BaseActivity extends Activity {
 		mToast.dismiss();
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mToast = null;
+		mProgressDialog.dismiss();
+		mProgressDialog = null;
+	}
 }
