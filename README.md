@@ -14,9 +14,12 @@ android开发公共库
 7、CrashLogHandlerUtil：奔溃日志，保存到文件
 8、Logger：格式化的log工具，可以将error级别的日志保存到文件
 9、VolleyService：网络访问工具
+10、扫码功能
 
 使用步骤：
 1、将两个库引入到项目中
 2、将项目的AndroidManifest.xml文件中的application标签下添加：android:name="com.android.ysq.utils.application.BaseApplication"
 3、添加权限：	<uses-permission android:name="android.permission.INTERNET" />
 			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+4、如果需要扫码功能，则添加扫码库到项目中，并参照扫码库的AndroidManifest－orig.xml文件配置项目的AndroidManifest.xml
+5、扫码类型支持配置可以修改扫码库的preferences.xml文件
