@@ -19,7 +19,7 @@ import android.text.TextUtils;
  * @reviseTime: 2016年2月22日 下午3:09:44
  * @version: v1.0
  */
-public class YJsonUtil {
+public class YJsonUtils {
 
 	/**
 	 * 将对象转换json字符串

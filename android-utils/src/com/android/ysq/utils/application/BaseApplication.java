@@ -1,6 +1,6 @@
 package com.android.ysq.utils.application;
 
-import com.android.ysq.utils.crash.CrashLogHandlerUtil;
+import com.android.ysq.utils.crash.CrashLogHandlerUtils;
 import com.android.ysq.utils.logger.LogLevel;
 import com.android.ysq.utils.logger.Logger;
 
@@ -11,6 +11,6 @@ public class BaseApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		Logger.init().logLevel(LogLevel.FULL);
-		CrashLogHandlerUtil.getInstance(this);
+		CrashLogHandlerUtils.getInstance(this);
 	}
 }

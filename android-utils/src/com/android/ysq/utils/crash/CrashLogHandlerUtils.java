@@ -21,9 +21,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 
-public class CrashLogHandlerUtil implements UncaughtExceptionHandler {
+public class CrashLogHandlerUtils implements UncaughtExceptionHandler {
 
-	private static CrashLogHandlerUtil mSelf;
+	private static CrashLogHandlerUtils mSelf;
 
 	// 系统默认的UncaughtException处理类
 	private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -35,7 +35,7 @@ public class CrashLogHandlerUtil implements UncaughtExceptionHandler {
 	private DateFormat mFormatter;
 	private File mSavePath;
 
-	private CrashLogHandlerUtil(Application application) {
+	private CrashLogHandlerUtils(Application application) {
 		mContext = application;
 		// 获取系统默认的UncaughtException处理器
 		mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -49,9 +49,9 @@ public class CrashLogHandlerUtil implements UncaughtExceptionHandler {
 		}
 	}
 
-	public static synchronized CrashLogHandlerUtil getInstance(Application application) {
+	public static synchronized CrashLogHandlerUtils getInstance(Application application) {
 		if (mSelf == null) {
-			mSelf = new CrashLogHandlerUtil(application);
+			mSelf = new CrashLogHandlerUtils(application);
 		}
 		return mSelf;
 	}
