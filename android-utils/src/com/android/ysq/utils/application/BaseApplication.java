@@ -7,10 +7,13 @@ import com.android.ysq.utils.logger.Logger;
 import android.app.Application;
 
 public class BaseApplication extends Application {
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		Logger.init().logLevel(LogLevel.FULL);
 		CrashLogHandlerUtils.getInstance(this);
+
 	}
+
 }
