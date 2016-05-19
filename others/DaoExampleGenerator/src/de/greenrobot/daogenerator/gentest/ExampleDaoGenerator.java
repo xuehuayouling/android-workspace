@@ -31,11 +31,13 @@ import de.greenrobot.daogenerator.ToMany;
 public class ExampleDaoGenerator {
 
     public static void main(String[] args) throws Exception {
+    	// 生成的类的包名
         Schema schema = new Schema(1000, "com.example.greendaoexample");
 
         addNote(schema);
         addCustomerOrder(schema);
 
+        // 生成的包的路径
         new DaoGenerator().generateAll(schema, "../GreenDaoExample/src");
     }
 
