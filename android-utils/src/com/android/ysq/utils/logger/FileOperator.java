@@ -38,18 +38,19 @@ public class FileOperator {
 			StringBuffer sb = new StringBuffer();
 			sb.append(getStartInfo());
 			sb.append(args.length == 0 ? message : String.format(message, args));
-			Writer writer = new StringWriter();
-			PrintWriter printWriter = new PrintWriter(writer);
-			ex.printStackTrace(printWriter);
-			Throwable cause = ex.getCause();
-			while (cause != null) {
-				cause.printStackTrace(printWriter);
-				cause = cause.getCause();
+			if (ex != null) {
+				Writer writer = new StringWriter();
+				PrintWriter printWriter = new PrintWriter(writer);
+				ex.printStackTrace(printWriter);
+				Throwable cause = ex.getCause();
+				while (cause != null) {
+					cause.printStackTrace(printWriter);
+					cause = cause.getCause();
+				}
+				printWriter.close();
+				String result = writer.toString();
+				sb.append(result);
 			}
-			printWriter.close();
-			String result = writer.toString();
-			sb.append(result);
-
 			sb.append(getEndInfo());
 			File dir = SAVE_PATH;
 			if (!dir.exists()) {

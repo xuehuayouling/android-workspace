@@ -11,9 +11,12 @@ public class BaseApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Logger.init().logLevel(LogLevel.FULL);
+		Logger.init(getLogTag()).logLevel(LogLevel.FULL);
 		CrashLogHandlerUtils.getInstance(this);
 
 	}
-
+	
+	protected String getLogTag() {
+		return "YLogTag";
+	}
 }
