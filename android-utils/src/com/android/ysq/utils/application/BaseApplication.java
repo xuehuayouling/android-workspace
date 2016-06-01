@@ -13,7 +13,6 @@ public class BaseApplication extends Application {
 		super.onCreate();
 		Logger.init(getLogTag()).logLevel(LogLevel.FULL);
 		CrashLogHandlerUtils.getInstance(this);
-
 	}
 	
 	protected String getLogTag() {
