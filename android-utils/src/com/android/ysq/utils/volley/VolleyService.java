@@ -30,7 +30,7 @@ final public class VolleyService {
 	public interface VolleyServiceCallBack {
 		public void onRequestSuccess(String urlAndRequestKey, Object response);
 
-		public void onRequestFailed(String urlAndRequestKey, YResponseError error, Object message);
+		public void onRequestFailed(String urlAndRequestKey, YResponseError error, Object response);
 	}
 
 	private VolleyService() {
@@ -182,9 +182,9 @@ final public class VolleyService {
 				}
 				if (!ret.isSuccess()) {
 					YResponseError error = new YResponseError(YResponseError.Type.OPERATEERROR);
-					callBack.onRequestFailed(url + requestKey, error, ret.getMessage());
+					callBack.onRequestFailed(url + requestKey, error, ret.getErrorResult());
 				} else {
-					callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getResult());
+					callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getSuccessResult());
 				}
 
 			}
