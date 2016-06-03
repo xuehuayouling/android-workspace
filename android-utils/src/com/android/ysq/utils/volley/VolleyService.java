@@ -30,7 +30,7 @@ final public class VolleyService {
 	public interface VolleyServiceCallBack {
 		public void onRequestSuccess(String urlAndRequestKey, Object response);
 
-		public void onRequestFailed(String urlAndRequestKey, YResponseError error);
+		public void onRequestFailed(String urlAndRequestKey, YResponseError error, Object message);
 	}
 
 	private VolleyService() {
@@ -61,7 +61,7 @@ final public class VolleyService {
 	 *            请求返回数据的结果类型
 	 */
 	public void requestObject(final String requestKey, String url, final Map<String, String> map,
-			final VolleyServiceCallBack callBack, final Class<? extends YResponseDTO> clazz) {
+			final VolleyServiceCallBack callBack, final Class<? extends IResponseDTO> clazz) {
 		requestObject(Method.POST, requestKey, url, map, callBack, clazz, true);
 	}
 
@@ -80,7 +80,7 @@ final public class VolleyService {
 	 *            请求返回数据的结果类型
 	 */
 	public void requestObject(String url, final Map<String, String> map, final VolleyServiceCallBack callBack,
-			final Class<? extends YResponseDTO> clazz) {
+			final Class<? extends IResponseDTO> clazz) {
 		requestObject(Method.POST, null, url, map, callBack, clazz, true);
 	}
 
@@ -101,7 +101,7 @@ final public class VolleyService {
 	 *            请求返回数据的结果类型
 	 */
 	public void requestObject(int method, final String url, final Map<String, String> map,
-			final VolleyServiceCallBack callBack, final Class<? extends YResponseDTO> clazz) {
+			final VolleyServiceCallBack callBack, final Class<? extends IResponseDTO> clazz) {
 		requestObject(method, null, url, map, callBack, clazz, true);
 	}
 
@@ -158,7 +158,7 @@ final public class VolleyService {
 	 *            是否取消之前的具有相同的requestKey和url的请求
 	 */
 	public void requestObject(int method, final String requestKey, final String url, final Map<String, String> map,
-			final VolleyServiceCallBack callBack, final Class<? extends YResponseDTO> clazz, boolean cancelSame) {
+			final VolleyServiceCallBack callBack, final Class<? extends IResponseDTO> clazz, boolean cancelSame) {
 		if (cancelSame) {
 			cancelAll(requestKey, url);
 		}
@@ -170,21 +170,21 @@ final public class VolleyService {
 				if (callBack == null) {
 					return;
 				}
-				YResponseDTO ret = null;
+				IResponseDTO ret = null;
 				try {
-					ret = YJsonUtils.parseObject(response, clazz == null ? YResponseDTO.class : clazz);
+					ret = YJsonUtils.parseObject(response, clazz == null ? IResponseDTO.class : clazz);
 				} catch (Exception e) {
 					Logger.e(e, "Volley请求结果：" + response);
 					YResponseError error = new YResponseError(YResponseError.Type.DECODEERROR);
-					callBack.onRequestFailed(url + requestKey, error);
+					callBack.onRequestFailed(url + requestKey, error, response);
 					e.printStackTrace();
 					return;
 				}
 				if (!ret.isSuccess()) {
-					YResponseError error = new YResponseError(ret.getStatus_code(), ret.getMessage());
-					callBack.onRequestFailed(url + requestKey, error);
+					YResponseError error = new YResponseError(YResponseError.Type.OPERATEERROR);
+					callBack.onRequestFailed(url + requestKey, error, ret.getMessage());
 				} else {
-					callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getData());
+					callBack.onRequestSuccess(url + requestKey, clazz == null ? ret : ret.getResult());
 				}
 
 			}
@@ -204,7 +204,7 @@ final public class VolleyService {
 					error.printStackTrace();
 				}
 				if (callBack != null) {
-					callBack.onRequestFailed(url + requestKey, yResponseError);
+					callBack.onRequestFailed(url + requestKey, yResponseError, null);
 				}
 			}
 		}) {
