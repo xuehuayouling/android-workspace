@@ -1,11 +1,14 @@
 package com.android.ysq.utils.mqtt;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import android.app.Application;
 import android.content.Context;
-import android.telephony.TelephonyManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 public class MqttService {
 
@@ -29,9 +32,9 @@ public class MqttService {
 	public synchronized void init(Application context, String serverURI) throws ExceptionInInitializerError {
 		if (!inited) {
 			mContext = context;
-			TelephonyManager TelephonyMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-			String szImei = TelephonyMgr.getDeviceId();
-			mDeviceId = String.format("an_%s", szImei);
+			WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+			WifiInfo info = wifi.getConnectionInfo();
+			mDeviceId = String.format("an_%s", info.getMacAddress());
 			mClient = new MqttAndroidClient(mContext, serverURI, mDeviceId);
 			inited = true;
 		} else {
@@ -43,10 +46,10 @@ public class MqttService {
 		return mClient;
 	}
 
-	public void startService() {
+	public void startService(MqttConnectOptions conOpt, IMqttActionListener listener) {
 		if (!mClient.isConnected()) {
 			try {
-				mClient.connect(null, null, null);
+				mClient.connect(conOpt, null, listener);
 			} catch (MqttException e) {
 				e.printStackTrace();
 			}
