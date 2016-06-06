@@ -1,21 +1,23 @@
 package com.android.ysq.utils;
 
+import java.lang.ref.WeakReference;
+
 import android.app.Activity;
 import android.widget.Toast;
 
 public class YSingleToast {
 
 	private Toast mToast;
-	final Activity mContext;
+	final WeakReference<Activity> mWeakReference;
 	private static YSingleToast mSelf;
 	private YSingleToast(Activity context) {
-		mContext = context;
+		mWeakReference = new WeakReference<Activity>(context);
 	}
 	
 	public static synchronized YSingleToast getInstance(Activity context) {
 		if (mSelf == null) {
 			mSelf = new YSingleToast(context);
-		} else if (mSelf.mContext != context) {
+		} else if (mSelf.mWeakReference.get() != context) {
 			mSelf.dismiss();
 			mSelf = new YSingleToast(context);
 		}
@@ -31,13 +33,15 @@ public class YSingleToast {
 	}
 
 	public void show(int resId, int duration) {
-		this.show(mContext.getString(resId), duration);
+		if (mWeakReference.get() != null) {
+			this.show(mWeakReference.get().getString(resId), duration);
+		}
 	}
 
 	public void show(CharSequence text, int duration) {
 		dismiss();
-		if (mContext != null && !mContext.isFinishing()) {
-			mToast = Toast.makeText(mContext, text, duration);
+		if (mWeakReference.get() != null && !mWeakReference.get().isFinishing()) {
+			mToast = Toast.makeText(mWeakReference.get(), text, duration);
 			mToast.show();
 		}
 	}

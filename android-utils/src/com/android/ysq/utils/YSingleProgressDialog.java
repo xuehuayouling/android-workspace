@@ -1,21 +1,23 @@
 package com.android.ysq.utils;
 
+import java.lang.ref.WeakReference;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 
 public class YSingleProgressDialog {
 
 	private ProgressDialog mProgressDialog;
-	final Activity mContext;
+	final WeakReference<Activity> mContext;
 	private static YSingleProgressDialog mSelf;
 	private YSingleProgressDialog(Activity context) {
-		mContext = context;
+		mContext = new WeakReference<Activity>(context);
 	}
 	
 	public static synchronized YSingleProgressDialog getInstance(Activity context) {
 		if (mSelf == null) {
 			mSelf = new YSingleProgressDialog(context);
-		} else if (mSelf.mContext != context) {
+		} else if (mSelf.mContext.get() != context) {
 			mSelf.dismiss();
 			mSelf = new YSingleProgressDialog(context);
 		}
@@ -24,7 +26,9 @@ public class YSingleProgressDialog {
 
 	public void show(String title, CharSequence content) {
 		dismiss();
-		mProgressDialog = ProgressDialog.show(mContext, title, content, true);
+		if (mContext.get() != null) {
+			mProgressDialog = ProgressDialog.show(mContext.get(), title, content, true);
+		}
 	}
 	
 	public void show() {
