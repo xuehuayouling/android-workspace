@@ -15,6 +15,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.android.ysq.utils.FastJsonImpl;
 import com.android.ysq.utils.YJsonUtils;
 import com.android.ysq.utils.logger.Logger;
 
@@ -172,7 +173,7 @@ final public class VolleyService {
 				}
 				IResponseDTO ret = null;
 				try {
-					ret = YJsonUtils.parseObject(response, clazz == null ? IResponseDTO.class : clazz);
+					ret = YJsonUtils.getJson().parseObject(response, clazz == null ? IResponseDTO.class : clazz);
 				} catch (Exception e) {
 					Logger.e(e, "Volley请求结果：" + response);
 					YResponseError error = new YResponseError(YResponseError.Type.DECODEERROR);

@@ -25,7 +25,7 @@ public class YResponseError extends Exception {
 	private int mCode;
 	
 	public enum Type {
-		OPERATEERROR(-6, "服务器操作失败"),
+		OPERATEERROR(-6, "操作失败"),
 		NOCONNECTIONERROR(-5, "无法访问网络"),
 		UNKNOWERROR(-4, "未知错误，请联系管理员"),
 		DECODEERROR(-3, "数据解析失败，请联系管理员"),
